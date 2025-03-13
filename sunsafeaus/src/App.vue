@@ -1,25 +1,22 @@
 <template>
-  <div id="app" class="container">
-    <LandingPage />
+  <div id="app">
+    <NavBar />
+    <div class="content">
+      <router-view />
+    </div>
   </div>
 </template>
 
-<script>
-import LandingPage from "./components/LandingPage.vue";
-
-export default {
-  components: {
-    LandingPage,
-  },
-};
-</script>
-
 <style>
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+#app {
+  font-family: 'Raleway', sans-serif;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  margin-top: 80px;
   padding: 20px;
 }
 </style>

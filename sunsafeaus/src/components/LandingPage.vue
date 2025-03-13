@@ -14,7 +14,7 @@
     <section class="uv-exposure">
       <h2>Know the UV exposure around you</h2>
       <label>Search your location: <input type="text" placeholder="....." /></label>
-      <p>Tracker output</p>
+      <div><uv-gauge :uv-value="uvValue" :size="300" /></div>
     </section>
     
     <section class="sun-safety-guide">
@@ -39,11 +39,33 @@
       <p>→ Output</p>
     </section>
   </div>
+
+  <section class="sunscream-reminder">
+    <h2>Sunscreen Reminder</h2>
+  </section>
+<div>
+  <sunscreen-reminder />
+</div>
 </template>
 
 <script>
+import { ref } from 'vue';
+import UvGauge from './UVGauge.vue';  
+import SunscreenReminder from './ScreamReminder.vue'
+
+
+
 export default {
   name: "LandingPage",
+  components: {
+    UvGauge,
+    SunscreenReminder
+  },
+
+  setup() {
+    const uvValue = ref(9.5)
+    return { uvValue } 
+  }
 };
 </script>
 

@@ -7,6 +7,16 @@
   </div>
 </template>
 
+<script>
+import NavBar from "./components/NavBar.vue";
+
+export default {
+  components: {
+    NavBar,
+  },
+};
+</script>
+
 <style>
 #app {
   font-family: 'Raleway', sans-serif;
@@ -16,7 +26,7 @@
 }
 
 .content {
-  margin-top: 80px;
+  margin-top: 20px;
   padding: 20px;
 }
 </style>

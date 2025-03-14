@@ -16,7 +16,7 @@
 
 <style scoped>
 .navbar {
-  width: 100vw; /* Ensure full width */
+  width: 100%; 
   background-color: #fff4bc;
   position: fixed;
   top: 0;
@@ -46,6 +46,11 @@
   padding: 0;
 }
 
+.nav-links li {
+  display: flex;
+  align-items: center;
+}
+
 .nav-links a {
   text-decoration: none;
   font-weight: bold;
@@ -55,5 +60,9 @@
 
 .nav-links a.router-link-exact-active {
   color: #d97706;
+}
+
+body {
+  padding-top: 80px;
 }
 </style>

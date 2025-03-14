@@ -53,13 +53,15 @@
 
 .nav-links a {
   text-decoration: none;
-  font-weight: bold;
+  font-weight: normal;
   color: black;
   transition: color 0.3s;
 }
 
 .nav-links a.router-link-exact-active {
-  color: #d97706;
+  color: black; 
+  text-decoration: underline; 
+  text-underline-offset: 4px;
 }
 
 body {

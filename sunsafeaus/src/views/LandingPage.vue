@@ -8,7 +8,7 @@
           We are a bunch of tech enthusiasts who wish to contribute to the growing concerns
           about Australia’s sun protection habits and its UV exposure dangers.
         </p>
-        <button class="read-more">Plan Your Safety</button>
+        <button class="read-more" @click="goToResources">Plan Your Safety</button>
       </div>
     </div>
   </div>
@@ -17,6 +17,11 @@
 <script>
 export default {
   name: "LandingPage",
+  methods: {
+    goToResources() {
+      this.$router.push("/resources");
+    },
+  },
 };
 </script>
 
@@ -48,12 +53,12 @@ export default {
 
 .overlay {
   position: absolute;
-  top: 60%; /* Adjust to lower the text */
-  left: -3%; /* Ensure text stays within the left side */
+  top: 60%;
+  left: -3%;
   transform: translateY(-50%);
   color: black;
   text-align: left;
-  max-width: 420px; /* Adjusted for better readability */
+  max-width: 420px;
 }
 
 .overlay h2 {
@@ -76,5 +81,10 @@ export default {
   cursor: pointer;
   border-radius: 5px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease-in-out;
+}
+
+.read-more:hover {
+  background-color: #f6e8b3;
 }
 </style>

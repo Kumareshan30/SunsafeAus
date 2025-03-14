@@ -32,7 +32,9 @@ export default {
   align-items: center;
   min-height: calc(100vh - 80px);
   position: relative;
+  padding: 20px; 
 }
+
 
 .image-container {
   position: relative;
@@ -44,37 +46,37 @@ export default {
 }
 
 .background-image {
-  width: 120%;
+  width: 110%;
   height: auto;
   object-fit: cover;
   display: block;
-  margin-left: 10%;
+  margin-left: 5%;
 }
 
 .overlay {
   position: absolute;
-  top: 60%;
-  left: -3%;
+  top: 65%;
+  left: 5%; 
   transform: translateY(-50%);
   color: black;
   text-align: left;
-  max-width: 420px;
+  max-width: 380px;
 }
 
 .overlay h2 {
-  font-size: 2.4rem;
+  font-size: 2rem;
   font-weight: bold;
   line-height: 1.2;
 }
 
 .overlay p {
-  font-size: 1.1rem;
-  margin: 20px 0;
+  font-size: 1rem;
+  margin: 15px 0;
 }
 
 .read-more {
   background-color: #fff4bc;
-  padding: 12px 18px;
+  padding: 10px 16px;
   border: none;
   font-size: 1rem;
   font-weight: bold;
@@ -86,5 +88,38 @@ export default {
 
 .read-more:hover {
   background-color: #f6e8b3;
+}
+
+@media screen and (max-width: 768px) {
+  .image-container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .background-image {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .overlay {
+    position: absolute;
+    top: 35%;
+    left: 10%;
+    transform: translateY(-50%);
+    max-width: 80%;
+  }
+
+  .overlay h2 {
+    font-size: 1.8rem;
+  }
+
+  .overlay p {
+    font-size: 0.9rem;
+  }
+
+  .read-more {
+    font-size: 0.9rem;
+    padding: 8px 14px;
+  }
 }
 </style>

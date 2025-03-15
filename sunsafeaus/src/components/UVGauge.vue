@@ -24,7 +24,7 @@
 
       <text
         x="100"
-        y="90"
+        y="140"
         text-anchor="middle"
         font-size="24"
         font-weight="bold"
@@ -35,7 +35,7 @@
 
       <text
         x="100"
-        y="140"
+        y="160"
         text-anchor="middle"
         font-size="14"
         fill="#666"
@@ -130,11 +130,11 @@ const displayValue = computed(() => props.uvValue.toFixed(1));
 
 const statusText = computed(() => {
   const value = props.uvValue;
-  if (value <= 2.9) return 'Low';
-  if (value <= 5.9) return 'Moderate';
-  if (value <= 7.9) return 'High';
-  if (value <= 10.9) return 'Very High';
-  if (value <= 12.9) return 'Extreme';
+  if (value <= 2.9) return 'Low Risk';
+  if (value <= 5.9) return 'Moderate Risk';
+  if (value <= 7.9) return 'High Risk';
+  if (value <= 10.9) return 'Very High Risk';
+  if (value <= 12.9) return 'Extreme Risk';
   return 'Dangerous';
 });
 </script>

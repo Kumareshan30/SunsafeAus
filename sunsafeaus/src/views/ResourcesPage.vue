@@ -52,7 +52,7 @@
         <ul v-if="locationOptions.length" class="location-options">
           <li
             v-for="item in locationOptions"
-            :key="item.postcode"
+            :key="item"
             @click="selectLocation(item)"
           >
             {{ item.locality }} ({{ item.postcode }})
@@ -131,7 +131,7 @@ const skinColors = [
 
 const activityLevels = [
   { value: 'low', label: 'Low (0-2 hours)' },
-  { value: 'median', label: 'Median (2-4 hours)' },
+  { value: 'medium', label: 'Medium (2-4 hours)' },
   { value: 'high', label: 'High (4+ hours)' }
 ]
 
@@ -170,6 +170,7 @@ const selectLocation = (item) => {
   form.value.location = item
   locationQuery.value = `${item.locality} (${item.postcode})`
   locationOptions.value = []
+  console.log('Selected location:', form.value.location)
 }
 
 // validate
@@ -205,7 +206,7 @@ const submitForm = async () => {
 
   }catch (err) {
   console.error(err)
-  error.value = err.response?.data?.detail || '请求失败，请稍后重试'
+  error.value = err.response?.data?.detail || 'Fail to request, Try again later'
 }
 }
 
@@ -249,7 +250,7 @@ const generateReminders = () => {
 //counter on time remain
 const timeUntil = (reminderTime) => {
   const diff = reminderTime.diff(now.value, 'minute')
-  if (diff <= 0) return '已过'
+  if (diff <= 0) return 'pass'
   if (diff < 60) return `in ${diff} minutes`
   const hours = Math.floor(diff / 60)
   const minutes = diff % 60

@@ -1,30 +1,34 @@
-from fastapi import FastAPI, Query, HTTPException
+from fastapi import FastAPI, Query, HTTPException, Depends
 from typing import List, Optional
 import httpx
+from sqlalchemy.orm import Session
 
+from . import schemas, crud
+from .database import SessionLocal
 from .dummydata.dummydata import dummy_locations, dummy_recommendations
-from .models.LocationModel import Location
 from .models.SunProtectionModel import SunProtectionRecommendation
 from .models.UserInputModel import UserInput
 
 app = FastAPI()
 
+# Dependency to get the database session
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
-@app.get("/locations", response_model=List[Location])
-async def get_locations(
-        searchParam: Optional[str] = Query(None, min_length=1, max_length=50)
+@app.get("/locations", response_model=List[schemas.Location])
+async def read_locations(
+    search_param: Optional[str] = Query(None, min_length=1, max_length=50),
+    db: Session = Depends(get_db)
 ):
-    if searchParam:
-        search_lower = searchParam.lower()
-        results = [
-            loc for loc in dummy_locations
-            if search_lower in loc.location_name.lower()
-               or search_lower in loc.zipcode.lower()
-               or search_lower in loc.state.lower()
-        ]
-    else:
-        results = dummy_locations
-    return results
+    locations = crud.get_locations(db=db, search_param=search_param)
+    if not locations:
+        raise HTTPException(status_code=404, detail="No locations found matching the search criteria.")
+    return locations
+
 
 
 # Your Ambee API key

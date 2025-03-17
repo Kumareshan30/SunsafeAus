@@ -15,7 +15,7 @@
       </div> -->
 
   <div class="insights-page">
-    <h1>Key Insights</h1>
+
 
     <!-- 图片展示 -->
     <div class="image-grid">
@@ -26,6 +26,7 @@
 
     <!-- 关键见解展示 -->
     <div class="key-insights">
+      <h1>Key Insights</h1>
       <h2>Steady Increase in Cancer Incidence</h2>
       <p>Steady Increase in Cancer Incidence
 

@@ -1,4 +1,6 @@
 <template>
+  <div class="resources">
+    <h1>Get Your Personalized Recommendation For Sun Safety</h1>
   <div class="container">
     <div class="left-section">
   <div class="recommendation-container">
@@ -81,6 +83,9 @@
 
   <div class="right-section">
       <h3>Reminders：</h3>
+      <div class="reminder-instructions">
+    <p>Don't forget to reapply Sun Scream</p>
+    </div>
       <ul class="reminder-list">
         <li v-for="(time, index) in reminders" :key="index" class="reminder-item">
           <span class="time">{{ time.format('HH:mm') }}</span>
@@ -89,6 +94,7 @@
       </ul>
     </div>
   </div>
+</div>
 </template>
 
 <script setup>
@@ -100,7 +106,7 @@ import { onMounted } from 'vue';
 import { watch } from 'vue';
 
 
-// 表单数据
+
 const form = ref({
   skin_type: '',
   skin_tone: '',
@@ -108,7 +114,7 @@ const form = ref({
   location: null
 })
 
-// 下拉选项数据
+
 const skinTypes = [
   { value: 'oily', label: 'Oily' },
   { value: 'dry', label: 'Dry' },
@@ -129,22 +135,22 @@ const activityLevels = [
   { value: 'high', label: 'High (4+ hours)' }
 ]
 
-// 位置相关
+
 const locationQuery = ref('')
 const locationOptions = ref([])
 
 
 
-// 推荐结果与错误
+
 const recommendation = ref({})
 const error = ref('')
 
-const reminders = ref([]) // 存储提醒时间
+const reminders = ref([]) 
 
-// 更新时间
+
 const now = ref(dayjs())
 
-// 搜索位置
+
 const searchLocations = async () => {
   if (locationQuery.value) {
     try {
@@ -153,21 +159,20 @@ const searchLocations = async () => {
       })
       locationOptions.value = response.data
     } catch (err) {
-      console.error('位置搜索失败:', err)
+      console.error('fail to find location:', err)
     }
   } else {
     locationOptions.value = []
   }
 }
 
-// 选择位置
 const selectLocation = (item) => {
   form.value.location = item
   locationQuery.value = `${item.location_name} (${item.zipcode})`
   locationOptions.value = []
 }
 
-// 表单验证
+// validate
 const validateForm = () => {
   return (
     form.value.skin_type &&
@@ -177,13 +182,13 @@ const validateForm = () => {
   )
 }
 
-// 提交表单
+// submit
 const submitForm = async () => {
   error.value = ''
   recommendation.value = {}
 
   if (!validateForm()) {
-    error.value = '请填写所有必填字段'
+    error.value = 'Please filled in the whole form'
     return
   }
 
@@ -208,41 +213,40 @@ let timer = null
 onMounted(() => {
   timer = setInterval(() => {
     now.value = dayjs()
-  }, 60 * 1000) // 每分钟更新一次
+  }, 60 * 1000) 
 })
 
 onUnmounted(() => {
   clearInterval(timer)
 })
 
-// 监听 recommendation 更新提醒
+// get recommendation update
 watch(recommendation, () => {
   generateReminders()
 })
 
 const generateReminders = () => {
-  reminders.value = [] // 清空上次的提醒
+  reminders.value = [] 
 
   if (!recommendation.value.reapply_frequency) return
 
   const freqMatch = recommendation.value.reapply_frequency.match(/(\d+)/)
   if (!freqMatch) return
 
-  const hoursInterval = parseInt(freqMatch[1]) // 提取频率小时数
-  const startTime = dayjs() // 当前时间
-  const endTime = dayjs().hour(18).minute(0).second(0) // 设定晚上 18:00 截止
+  const hoursInterval = parseInt(freqMatch[1]) 
+  const startTime = dayjs() 
+  const endTime = dayjs().hour(18).minute(0).second(0) 
 
   let nextTime = startTime.add(hoursInterval, 'hour').startOf('hour')
 
-  // 自动生成提醒
+  // get notice
   while (nextTime.isBefore(endTime)) {
     reminders.value.push(nextTime)
     nextTime = nextTime.add(hoursInterval, 'hour')
   }
 
-  console.log('生成的提醒:', reminders.value.map(t => t.format('HH:mm')))
 }
-// 倒计时计算器
+//counter on time remain
 const timeUntil = (reminderTime) => {
   const diff = reminderTime.diff(now.value, 'minute')
   if (diff <= 0) return '已过'
@@ -255,82 +259,273 @@ const timeUntil = (reminderTime) => {
 </script>
 
 <style scoped>
+.resources {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 20px;
+  color: #1a202c;
+}
+
+h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 32px;
+  text-align: center;
+  color: #2d3748;
+  line-height: 1.2;
+}
+
+
 .container {
   display: flex;
-  justify-content: space-between; /* 将左右部分分开 */
+  gap: 24px;
+  justify-content: space-between;
+  width: 100%; 
+  max-width: 1200px; 
+  margin: 0 auto; 
+  padding: 20px; 
+  box-sizing: border-box; 
 }
+
+.left-section, .right-section {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.left-section {
+  flex: 1 1 calc(60% - 12px); 
+}
+
+.right-section {
+  flex: 1 1 calc(40% - 12px); 
+}
+
+.right-section {
+  flex: 1 1 35%; 
+  display: flex;
+  flex-direction: column;
+}
+
 .recommendation-container {
-  max-width: 600px;
-  margin: 20px auto;
-  padding: 20px;
+  padding: 28px;
 }
 
-.result-box {
-  margin-top: 20px;
-  padding: 15px;
-  border: 1px solid #e4e7ed;
-  border-radius: 4px;
-  background-color: #f8f9fa;
+.form-group {
+  margin-bottom: 20px;
 }
 
-.error-message {
-  color: #f56c6c;
-  margin-top: 10px;
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  color: #4a5568;
+}
+
+.form-group select,
+.form-group input {
+  width: 100%;
+  max-width: 350px;
+  padding: 12px 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 15px;
+  color: #2d3748;
+  background-color: #f8fafc;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.form-group select:focus,
+.form-group input:focus {
+  outline: none;
+  border-color: #cbd5e0;
+  box-shadow: 0 0 0 3px rgba(203, 213, 224, 0.4);
+  background-color: #ffffff;
+}
+
+.form-group select:hover,
+.form-group input:hover {
+  border-color: #cbd5e0;
 }
 
 .location-options {
-  border: 1px solid #ccc;
-  max-height: 150px;
+  position: absolute;
+  width: calc(100% - 56px);
+  margin-top: 4px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-height: 200px;
   overflow-y: auto;
-  list-style: none;
-  padding: 0;
-  margin: 0;
+  z-index: 10;
 }
 
 .location-options li {
-  padding: 8px;
+  padding: 12px 16px;
   cursor: pointer;
+  transition: background-color 0.15s ease;
+  font-size: 14px;
 }
 
 .location-options li:hover {
-  background-color: #f0f0f0;
+  background-color: #f7fafc;
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 14px;
+  background-color: #fff4bc;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #2d3748;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  margin-top: 8px;
+}
+
+button[type="submit"]:hover {
+  background-color: #ffefb3;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+}
+
+button[type="submit"]:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.result-box {
+  margin-top: 28px;
+  padding: 24px;
+  border-radius: 10px;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+.result-box h3 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #2d3748;
 }
 
 .recommendation-list {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 .recommendation-item {
-  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #edf2f7;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.recommendation-item:last-child {
+  border-bottom: none;
 }
 
 .key {
-  font-weight: bold;
-  text-transform: capitalize;
+  font-weight: 600;
+  color: #4a5568;
+  max-width: 50%;
 }
 
 .value {
-  margin-left: 10px;
+  color: #2d3748;
+  text-align: right;
+  max-width: 50%;
+}
+
+.error-message {
+  margin-top: 16px;
+  padding: 12px;
+  background-color: #fff5f5;
+  color: #c53030;
+  font-weight: 500;
+  text-align: center;
+  border-radius: 8px;
+  border: 1px solid #fed7d7;
+}
+
+h3 {
+  padding: 20px 28px;
+  margin: 0;
+  border-bottom: 1px solid #edf2f7;
+  font-size: 18px;
+  font-weight: 600;
+  color: #2d3748;
+  background-color: #f8fafc;
+}
+
+.reminder-content {
+  padding: 20px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.reminder-container {
+  flex-grow: 1;
 }
 
 .reminder-list {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 .reminder-item {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 8px;
+  align-items: center;
+  padding: 14px 10px;
+  border-bottom: 1px solid #edf2f7;
+  transition: background-color 0.15s ease;
 }
 
-.time {
-  font-weight: bold;
+.reminder-item:last-child {
+  border-bottom: none;
 }
 
-.countdown {
-  color: gray;
-  font-size: 0.9em;
+.reminder-item:hover {
+  background-color: #f7fafc;
+}
+
+.reminder-time {
+  font-weight: 600;
+  color: #4a5568;
+  font-size: 16px;
+}
+
+.reminder-countdown {
+  color: #718096;
+  font-size: 14px;
+}
+
+.no-reminders {
+  text-align: center;
+  color: #718096;
+  padding: 40px 20px;
+  font-size: 14px;
+}
+
+.reminder-instructions p {
+  margin: 0;
+  line-height: 1.5;
+  font-size: 12px;
+
 }
 </style>

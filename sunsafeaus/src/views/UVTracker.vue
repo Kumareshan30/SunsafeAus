@@ -116,17 +116,17 @@ export default {
     async searchSuburbs() {
       try {
         const { data } = await axios.get(
-          `http://localhost:8000/locations`,
+          `https://ec2-3-27-221-3.ap-southeast-2.compute.amazonaws.com:8000/locations`,
           {
             params: {
-              searchParam: this.searchQuery.trim()
+              search_param: this.searchQuery.trim()
             }
           }
         );
 
         this.searchResults = data.map(loc => ({
           location_id: `${loc.id}`,
-          name: `${loc.location_name}, ${loc.state} ${loc.zipcode}`
+          name: `${loc.locality}, ${loc.state} ${loc.postcode}`
         }));
 
         this.errorMessage = data.length ? '' : 'Cannot find Suburb/Postcode';
@@ -143,7 +143,7 @@ export default {
 
       try {
         const  response  = await axios.get(
-          `http://localhost:8000/weather`,  
+          `https://ec2-3-27-221-3.ap-southeast-2.compute.amazonaws.com:8000/weather`,  
           {
             params: {
               location_id: this.selectedResult.location_id

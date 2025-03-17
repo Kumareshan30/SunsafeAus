@@ -52,10 +52,10 @@
         <ul v-if="locationOptions.length" class="location-options">
           <li
             v-for="item in locationOptions"
-            :key="item.zipcode"
+            :key="item.postcode"
             @click="selectLocation(item)"
           >
-            {{ item.location_name }} ({{ item.zipcode }})
+            {{ item.locality }} ({{ item.postcode }})
           </li>
         </ul>
       </div>
@@ -154,8 +154,8 @@ const now = ref(dayjs())
 const searchLocations = async () => {
   if (locationQuery.value) {
     try {
-      const response = await axios.get('http://localhost:8000/locations', {
-        params: { searchParam: locationQuery.value }
+      const response = await axios.get('http://ec2-3-27-221-3.ap-southeast-2.compute.amazonaws.com:8000/locations', {
+        params: { search_param: locationQuery.value }
       })
       locationOptions.value = response.data
     } catch (err) {
@@ -168,7 +168,7 @@ const searchLocations = async () => {
 
 const selectLocation = (item) => {
   form.value.location = item
-  locationQuery.value = `${item.location_name} (${item.zipcode})`
+  locationQuery.value = `${item.locality} (${item.postcode})`
   locationOptions.value = []
 }
 
@@ -200,7 +200,7 @@ const submitForm = async () => {
       location: form.value.location
     }
 
-    const response = await axios.post('http://localhost:8000/sun_protection', payload)
+    const response = await axios.post('http://ec2-3-27-221-3.ap-southeast-2.compute.amazonaws.com:8000/sun_protection', payload)
     recommendation.value = response.data
 
   }catch (err) {

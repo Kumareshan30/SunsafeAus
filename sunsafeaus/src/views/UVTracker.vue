@@ -125,7 +125,7 @@ export default {
         );
 
         this.searchResults = data.map(loc => ({
-          location_name: `${loc.location_name}`,
+          location_id: `${loc.id}`,
           name: `${loc.location_name}, ${loc.state} ${loc.zipcode}`
         }));
 
@@ -142,12 +142,11 @@ export default {
       if (!this.selectedResult) return;
 
       try {
-        // 修改API端点路径为/weather（根据你的实际后端路由）
         const  response  = await axios.get(
-          `http://localhost:8000/weather`,  // 修改为实际天气接口路径
+          `http://localhost:8000/weather`,  
           {
             params: {
-              location_name: this.selectedResult.location_name
+              location_id: this.selectedResult.location_id
             }
           }
         );
@@ -163,7 +162,6 @@ export default {
         this.errorMessage = error.response?.data?.detail 
           || 'Failed to load weather data';
         
-        // 重置数据防止显示旧值
         this.uvIndex = 0;
         this.weather = 0;
         this.humidity = 0;
@@ -212,8 +210,8 @@ export default {
 }
 
 .result-select {
-  padding: 8px;
-  width: 350px;
+  padding: 8px 12px;
+  width: 325px;
   border-radius: 4px;
 }
 

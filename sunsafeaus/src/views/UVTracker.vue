@@ -24,7 +24,7 @@
           :key="result.id" 
           :value="result"
         >
-          {{ result.locality }}
+          {{ result.name }}
         </option>
       </select>
     </div>

@@ -182,6 +182,7 @@ export default {
 .uv-tracker {
   text-align: center;
   padding: 20px;
+  background: transparent;
 }
 
 .search-section {
@@ -199,7 +200,7 @@ export default {
 }
 
 .search-input:focus {
-  border: 2px solid #fff4bc;
+  border: 2px solid #ffd700;
   outline: none;
 }
 
@@ -224,7 +225,15 @@ export default {
 }
 
 .uv-gauge {
-  margin: 30px auto;
+  background: transparent;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: none;
+}
+
+.uv-gauge-wrapper {
+  box-shadow: none !important;
+  background: none;
 }
 
 .uv-value {
@@ -233,27 +242,31 @@ export default {
 }
 
 .uv-risk {
-  color: #c0392b;
-  margin-top: 10px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #e74c3c;
 }
 
 .info-container {
   display: flex;
-  justify-content: center;
-  gap: 40px;
-  margin-top: 30px;
+  justify-content: space-around;
+  flex-wrap: wrap; 
+  gap: 20px;
+  margin-top: 20px;
 }
 
 .info-box {
   padding: 15px;
-  min-width: 120px;
-  background: #f8f9fa;
-  border-radius: 8px;
+  min-width: 140px;
+  background: #ffffff;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .info-icon {
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
 }
 
 .info-label {
@@ -265,4 +278,25 @@ export default {
   font-size: 0.9em;
   color: #666;
 }
+
+@media screen and (max-width: 768px) {
+  .search-input {
+    width: 90%;
+  }
+
+  .uv-gauge {
+    padding: 20px;
+  }
+
+  .info-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .info-box {
+    width: 80%;
+    margin-bottom: 10px;
+  }
+}
+
 </style>

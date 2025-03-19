@@ -67,7 +67,7 @@ export default {
   gap: 20px;
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 10;
 }
 
 .nav-links li {

@@ -116,7 +116,7 @@ export default {
     async searchSuburbs() {
       try {
         const { data } = await axios.get(
-          `https://ec2-3-27-221-3.ap-southeast-2.compute.amazonaws.com:8000/locations`,
+          `https://aussafebackend.onrender.com/locations`,
           {
             params: {
               search_param: this.searchQuery.trim()
@@ -143,7 +143,7 @@ export default {
 
       try {
         const  response  = await axios.get(
-          `https://ec2-3-27-221-3.ap-southeast-2.compute.amazonaws.com:8000/weather`,  
+          `https://aussafebackend.onrender.com/weather`,  
           {
             params: {
               location_id: this.selectedResult.location_id

@@ -154,7 +154,7 @@ const now = ref(dayjs())
 const searchLocations = async () => {
   if (locationQuery.value) {
     try {
-      const response = await axios.get('https://ec2-3-27-221-3.ap-southeast-2.compute.amazonaws.com:8000/locations', {
+      const response = await axios.get('https://aussafebackend.onrender.com//locations', {
         params: { search_param: locationQuery.value }
       })
       locationOptions.value = response.data
@@ -201,7 +201,7 @@ const submitForm = async () => {
       location: form.value.location
     }
 
-    const response = await axios.post('https://ec2-3-27-221-3.ap-southeast-2.compute.amazonaws.com:8000/sun_protection', payload)
+    const response = await axios.post('https://aussafebackend.onrender.com/sun_protection', payload)
     recommendation.value = response.data
 
   }catch (err) {

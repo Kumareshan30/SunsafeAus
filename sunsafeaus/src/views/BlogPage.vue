@@ -16,15 +16,12 @@
 
   <div class="insights-page">
 
-
-    <!-- 图片展示 -->
     <div class="image-grid">
   <div v-for="(image, index) in images" :key="index" class="image-card">
     <img :src="image.src" :alt="image.title" class="blog-image" />
   </div>
 </div>
 
-    <!-- 关键见解展示 -->
     <div class="key-insights">
       <h1>Key Insights</h1>
       <h2>Steady Increase in Cancer Incidence</h2>

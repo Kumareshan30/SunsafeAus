@@ -6,20 +6,15 @@
         :key="index"
         :d="segment.path"
         :stroke="segment.color"
-        stroke-width="8"
+        stroke-width="14"
         fill="none"
         stroke-linecap="round"
       />
 
-      <line
-        x1="100"
-        y1="80"
-        x2="100"
-        y2="35"
-        stroke="#333"
-        stroke-width="2"
+      <polygon
+        :points="getPointerPath()"
+        fill="#333"
         :transform="`rotate(${pointerAngle}, 100, 80)`"
-        stroke-linecap="round"
       />
 
       <text
@@ -118,6 +113,19 @@ const generateArcPath = (startDeg: number, endDeg: number): string => {
     ${largeArcFlag} 1
     ${CENTER.x + RADIUS * Math.cos(endRad)} 
     ${CENTER.y + RADIUS * Math.sin(endRad)}
+  `;
+};
+
+const getPointerPath = () => {
+  const baseWidth = 8;
+  const height = 55;
+  const centerX = 100;
+  const centerY = 80;
+
+  return `
+    ${centerX - baseWidth / 2},${centerY}
+    ${centerX + baseWidth / 2},${centerY}
+    ${centerX},${centerY - height}
   `;
 };
 

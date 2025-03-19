@@ -4,19 +4,37 @@
       <div class="logo">
         <img src="@/assets/logo.png" alt="Sun Safe Logo" />
       </div>
-      <ul class="nav-links">
+      <div class="hamburger" @click="toggleMenu">
+        &#9776;
+      </div>
+      <ul class="nav-links" :class="{ 'nav-active': isMenuActive }">
         <li><router-link to="/">Home</router-link></li>
         <li><router-link to="/uv-tracker">UV Tracker</router-link></li>
         <li><router-link to="/resources">Resources</router-link></li>
-        <li><router-link to="/blog">Information</router-link></li>
+        <li><router-link to="/blog">Blog</router-link></li>
       </ul>
     </div>
   </nav>
 </template>
 
+<script>
+export default {
+  data() {
+    return {
+      isMenuActive: false,
+    };
+  },
+  methods: {
+    toggleMenu() {
+      this.isMenuActive = !this.isMenuActive;
+    },
+  },
+};
+</script>
+
 <style scoped>
 .navbar {
-  width: 100%; 
+  width: 100%;
   background-color: #fff4bc;
   position: fixed;
   top: 0;
@@ -36,6 +54,12 @@
 
 .logo img {
   width: 100px;
+}
+
+.hamburger {
+  display: none;
+  font-size: 24px;
+  cursor: pointer;
 }
 
 .nav-links {
@@ -59,9 +83,33 @@
 }
 
 .nav-links a.router-link-exact-active {
-  color: black; 
-  text-decoration: underline; 
+  color: black;
+  text-decoration: underline;
   text-underline-offset: 4px;
+}
+
+@media (max-width: 768px) {
+  .hamburger {
+    display: block;
+  }
+  .nav-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    flex-direction: column;
+    background-color: #fff4bc;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+  }
+  .nav-links.nav-active {
+    max-height: 300px; /* Adjust based on the number of links */
+  }
+  .nav-links li {
+    text-align: center;
+    padding: 10px 0;
+  }
 }
 
 body {

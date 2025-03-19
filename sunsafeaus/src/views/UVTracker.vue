@@ -189,10 +189,18 @@ export default {
 }
 
 .search-input {
-  padding: 8px 12px;
-  width: 300px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  padding: 12px 15px;
+  width: 400px; 
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 16px;
+  transition: border 0.3s ease-in-out;
+}
+
+.search-input:focus {
+  border: 2px solid #fff4bc;
+  outline: none;
 }
 
 .loading {

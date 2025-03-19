@@ -154,7 +154,7 @@ const now = ref(dayjs())
 const searchLocations = async () => {
   if (locationQuery.value) {
     try {
-      const response = await axios.get('https://aussafebackend.onrender.com//locations', {
+      const response = await axios.get('https://aussafebackend.onrender.com/locations', {
         params: { search_param: locationQuery.value }
       })
       locationOptions.value = response.data

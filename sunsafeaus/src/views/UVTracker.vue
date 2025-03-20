@@ -46,7 +46,7 @@
       
       <div class="info-box">
         <img src="@/assets/AQ.png" alt="humidity Icon" class="info-icon" />
-        <p class="info-label">humidity</p>
+        <p class="info-label">Humidity</p>
         <p class="info-value">{{ humidity }}</p>
       </div>
 

@@ -1,7 +1,5 @@
 <template>
   <div class="cancer-mortality">
-    <h1>Cancer Mortality Data</h1> <!-- Added Title -->
-
     <!-- Filters -->
     <div class="filters">
       <div class="filter-item">

@@ -6,25 +6,20 @@
         :key="index"
         :d="segment.path"
         :stroke="segment.color"
-        stroke-width="8"
+        stroke-width="14"
         fill="none"
         stroke-linecap="round"
       />
 
-      <line
-        x1="100"
-        y1="80"
-        x2="100"
-        y2="35"
-        stroke="#333"
-        stroke-width="2"
+      <polygon
+        :points="getPointerPath()"
+        fill="#333"
         :transform="`rotate(${pointerAngle}, 100, 80)`"
-        stroke-linecap="round"
       />
 
       <text
         x="100"
-        y="90"
+        y="140"
         text-anchor="middle"
         font-size="24"
         font-weight="bold"
@@ -35,7 +30,7 @@
 
       <text
         x="100"
-        y="140"
+        y="160"
         text-anchor="middle"
         font-size="14"
         fill="#666"
@@ -121,6 +116,19 @@ const generateArcPath = (startDeg: number, endDeg: number): string => {
   `;
 };
 
+const getPointerPath = () => {
+  const baseWidth = 8;
+  const height = 55;
+  const centerX = 100;
+  const centerY = 80;
+
+  return `
+    ${centerX - baseWidth / 2},${centerY}
+    ${centerX + baseWidth / 2},${centerY}
+    ${centerX},${centerY - height}
+  `;
+};
+
 const pointerAngle = computed(() => {
   const normalizedValue = Math.min(Math.max(props.uvValue, 0), 15);
   return START_ANGLE + (normalizedValue / 15) * TOTAL_VISIBLE_ANGLE;
@@ -130,18 +138,17 @@ const displayValue = computed(() => props.uvValue.toFixed(1));
 
 const statusText = computed(() => {
   const value = props.uvValue;
-  if (value <= 2.9) return 'Low';
-  if (value <= 5.9) return 'Moderate';
-  if (value <= 7.9) return 'High';
-  if (value <= 10.9) return 'Very High';
-  if (value <= 12.9) return 'Extreme';
+  if (value <= 2.9) return 'Low Risk';
+  if (value <= 5.9) return 'Moderate Risk';
+  if (value <= 7.9) return 'High Risk';
+  if (value <= 10.9) return 'Very High Risk';
+  if (value <= 12.9) return 'Extreme Risk';
   return 'Dangerous';
 });
 </script>
 
 <style scoped>
 .uv-gauge {
-  font-family: Arial, sans-serif;
   background: #f8f9fa;
   border-radius: 8px;
   padding: 20px;

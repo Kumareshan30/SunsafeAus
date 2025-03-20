@@ -179,19 +179,24 @@ export default {
 </script>
 
 <style scoped>
+/* Container */
 .uv-tracker {
   text-align: center;
   padding: 20px;
   background: transparent;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
+/* Search Bar */
 .search-section {
   margin: 20px 0;
 }
 
 .search-input {
   padding: 12px 15px;
-  width: 400px; 
+  width: 100%;  /* Make it responsive */
+  max-width: 400px;
   border: 2px solid #ddd;
   border-radius: 6px;
   text-align: center;
@@ -209,33 +214,42 @@ export default {
   margin-top: 5px;
 }
 
+/* Error Message */
 .error {
   color: #e74c3c;
   margin: 10px 0;
+  font-size: 14px;
 }
 
+/* Dropdown Results */
 .results {
   margin: 15px 0;
 }
 
 .result-select {
   padding: 8px 12px;
-  width: 325px;
+  width: 100%;
+  max-width: 325px;
   border-radius: 4px;
 }
 
+/* UV Gauge Section */
 .uv-gauge {
   background: transparent;
   border-radius: 10px;
   padding: 20px;
   box-shadow: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.uv-gauge-wrapper {
-  box-shadow: none !important;
-  background: none;
+.uv-gauge svg {
+  max-width: 100%;
+  height: auto;
 }
 
+/* UV Risk Indicator */
 .uv-value {
   font-size: 24px;
   font-weight: bold;
@@ -247,6 +261,7 @@ export default {
   color: #e74c3c;
 }
 
+/* Info Section */
 .info-container {
   display: flex;
   justify-content: space-around;
@@ -255,9 +270,10 @@ export default {
   margin-top: 20px;
 }
 
+/* Individual Info Box */
 .info-box {
   padding: 15px;
-  min-width: 140px;
+  width: 120px; /* Adjust for mobile */
   background: #ffffff;
   border-radius: 10px;
   text-align: center;
@@ -279,13 +295,14 @@ export default {
   color: #666;
 }
 
+/* Mobile Responsiveness */
 @media screen and (max-width: 768px) {
   .search-input {
     width: 90%;
   }
 
   .uv-gauge {
-    padding: 20px;
+    padding: 10px;
   }
 
   .info-container {
@@ -298,5 +315,4 @@ export default {
     margin-bottom: 10px;
   }
 }
-
 </style>

@@ -1,10 +1,8 @@
 <template>
   <div class="resources">
-    <h1>Get Your Personalized Recommendation for Sun Safety</h1>
-    
-    <div class="container">
-      <!-- Left Section (Form) -->
-      <div class="left-section">
+    <h1>Get Your Personalized Recommendations for Sun Safety</h1>
+
+      
         <div class="recommendation-container">
           <form @submit.prevent="submitForm">
             <!-- Skin Type -->
@@ -59,12 +57,12 @@
             </div>
 
             <!-- Submit Button -->
-            <button type="submit" class="read-more">Get Recommendation</button>
+            <button type="submit" class="read-more">Get Recommendations</button>
           </form>
 
           <!-- Recommendation Box -->
           <div class="result-box">
-            <h3>Your Recommendation</h3>
+            <h3>Your Recommendations-</h3>
             <ul class="recommendation-list">
               <li v-for="(value, key) in recommendation" :key="key" class="recommendation-item">
                 <span class="key">{{ key.replace(/_/g, ' ') }}:</span>
@@ -79,31 +77,30 @@
             {{ error }}
           </div>
         </div>
-      </div>
 
       <!-- Right Section (Reminders) -->
       <div class="right-section">
-      <h3>Reminders：</h3>
-      <div class="reminder-instructions">
-    <p>Don't forget to reapply Sun Scream</p>
+        <h3>Sunscreen Reminders</h3>
+        <div class="reminder-instructions">
+          <p>The sun is strongest between 9 AM - 6 PM, making sun protection essential. Let us help you to set sunscreen reminders during these hours, based on your personalised recommendations. Download a reminder for your Google/Apple Calendar so you never forget!</p>
+        </div>
+        <ul class="reminder-list">
+          <li v-for="(time, index) in reminders" :key="index" class="reminder-item">
+            <span class="time">{{ time.format('HH:mm') }}</span>
+            <span class="countdown">{{ timeUntil(time) }}</span>
+          </li>
+        </ul>
+        <button v-if="reminders.length > 0" @click="downloadICSFile" class="download-button">
+          Download Reminders (.ics)
+        </button>
+      </div>
+
+    <div v-if="showPopup" class="popup-overlay">
+      <div class="popup-content">
+        <p>It's time to reapply sunscreen!</p>
+        <button @click="closePopup">Close</button>
+      </div>
     </div>
-      <ul class="reminder-list">
-        <li v-for="(time, index) in reminders" :key="index" class="reminder-item">
-          <span class="time">{{ time.format('HH:mm') }}</span>
-          <span class="countdown">{{ timeUntil(time) }}</span>
-        </li>
-      </ul>
-      <button v-if="reminders.length > 0" @click="downloadICSFile" class="download-button">
-    Download Reminders (.ics)
-  </button>
-    </div>
-  </div>
-  <div v-if="showPopup" class="popup-overlay">
-    <div class="popup-content">
-      <p>It's time to reapply sunscreen!</p>
-      <button @click="closePopup">Close</button>
-    </div>
-  </div>
   </div>
 </template>
 
@@ -354,78 +351,51 @@ const downloadICSFile = () => {
 </script>
 
 <style scoped>
-.read-more {
-  background-color: #fff4bc;
-  padding: 10px 16px;
-  border: none;
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  border-radius: 5px;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s ease-in-out;
-}
-
-.read-more:hover {
-  background-color: #f6e8b3;
-}
-
 .resources {
-  font-family: 'Inter', sans-serif;
-  max-width: 1200px;
+  max-width: 700px;
   margin: 0 auto;
   padding: 32px 20px;
-  color: #1a202c;
-}
-
-/* Heading */
-h1 {
-  font-size: 30px;
-  font-weight: 700;
   text-align: center;
-  color: #2d3748;
-  margin-bottom: 32px;
 }
 
-/* Layout Container */
-.container {
+h1 {
+  font-size: 26px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.content-container {
   display: flex;
-  gap: 24px;
-  justify-content: space-between;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-  box-sizing: border-box;
+  flex-direction: column;
+  align-items: center; 
+  gap: 20px;
+  width: 100%;
 }
 
-/* Left Section */
-.left-section {
-  flex: 1;
-  background-color: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  padding: 28px;
-}
-
-/* Right Section */
-.right-section {
-  flex: 0.4;
-  background-color: #fff;
+.recommendation-container {
+  width: 100%;
+  max-width: 600px;
+  min-height: 500px;
+  background-color: #ffffff;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   padding: 24px;
+  box-sizing: border-box;
+  min-height: 420px;
+  margin-bottom: 24px;
+  align-items: center;
+  margin: 0 auto;
 }
 
-/* Form Styling */
 .form-group {
   margin-bottom: 16px;
+  text-align: left;
 }
 
 .form-group label {
   display: block;
   font-size: 15px;
-  font-weight: 600;
-  color: #4a5568;
   margin-bottom: 6px;
 }
 
@@ -435,10 +405,11 @@ h1 {
   padding: 12px 14px;
   border: 1px solid #e2e8f0;
   border-radius: 8px;
-  font-size: 15px;
+  font-size: 12px;
   color: #2d3748;
   background-color: #f8fafc;
   transition: 0.2s ease;
+  box-sizing: border-box;
 }
 
 .form-group select:focus,
@@ -448,33 +419,34 @@ h1 {
   box-shadow: 0 0 5px rgba(255, 207, 64, 0.5);
 }
 
-/* Submit Button */
-.submit-btn {
-  width: 100%;
-  padding: 14px;
-  background-color: #ffcf40;
+.read-more {
+  background-color: #fff4bc;
+  padding: 12px 16px;
   border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 600;
-  color: #2d3748;
+  font-size: 1rem;
+  font-weight: bold;
   cursor: pointer;
-  transition: 0.3s;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease-in-out;
+  width: 100%;
+  margin-top: 10px;
 }
 
-.submit-btn:hover {
-  background-color: #ffbb33;
-  transform: scale(1.02);
+.read-more:hover {
+  background-color: #f6e8b3;
 }
 
 .result-box {
-  margin-top: 20px;
-  padding: 18px;
+  width: 100%;
   background: #f8fafc;
   border-radius: 8px;
+  padding: 18px;
+  box-sizing: border-box;
+  margin-top: 16px;
+  text-align: left;
 }
 
-/* Recommendation List */
 .recommendation-list {
   list-style: none;
   padding: 0;
@@ -487,18 +459,26 @@ h1 {
   padding: 10px 0;
   font-size: 14px;
   border-bottom: 1px solid #edf2f7;
+  align-items: center;
 }
 
 .key {
   font-weight: 600;
   color: #4a5568;
+  flex: 1;
+  text-align: left;
 }
 
 .value {
+  flex: 2;
+  text-align: left;
   color: #2d3748;
 }
 
-/* Error Message */
+.result-box:last-child {
+  margin-bottom: 0;
+}
+
 .error-message {
   margin-top: 12px;
   padding: 12px;
@@ -509,105 +489,47 @@ h1 {
   border-radius: 8px;
 }
 
-/* Reminders */
+.right-section {
+  max-width: 600px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.right-section,
+.result-box {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* **Fix: Adjusts Reminders Section Spacing** */
 .reminder-instructions {
   font-size: 14px;
   font-weight: 500;
-  color: #ffbb33;
+  color: grey;
   margin-bottom: 8px;
 }
 
-.reminder-list {
-  list-style: none;
-  padding: 0;
+
+.right-section h3 {
+  margin-bottom: 10px;
 }
 
-.reminder-item {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 0;
-  font-size: 14px;
-  border-bottom: 1px solid #edf2f7;
-}
-
-.reminder-item:last-child {
-  border-bottom: none;
-}
-.reminder-item:hover {
-  background-color: #f7fafc;
-}
-
-.reminder-time {
-  font-weight: 600;
-  color: #4a5568;
-  font-size: 16px;
-}
-
-.reminder-countdown {
-  color: #718096;
-  font-size: 14px;
-}
-
-.no-reminders {
+.right-section {
   text-align: center;
-  color: #718096;
-  padding: 40px 20px;
-  font-size: 14px;
+  margin-top: 10px;
 }
 
-.reminder-instructions p {
-  margin: 0;
-  line-height: 1.5;
-  font-size: 12px;
-
+.right-section:last-child {
+  margin-bottom: 0;
 }
 
-.popup-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.popup-content {
-  background-color: #ffffff;
-  padding: 24px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  text-align: center;
-}
-
-.popup-content p {
-  margin-bottom: 16px;
-  font-size: 16px;
-  color: #2d3748;
-}
-
-.popup-content button {
-  padding: 8px 16px;
-  background-color: #fff4bc;
-  border: none;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 600;
-  color: #2d3748;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.popup-content button:hover {
-  background-color: #ffefb3;
-}
 .download-button {
   width: 100%;
   padding: 12px;
-  background-color:#ffefb3;
+  background-color: #ffefb3;
   border: none;
   border-radius: 8px;
   font-size: 14px;
@@ -616,5 +538,17 @@ h1 {
   cursor: pointer;
   transition: background-color 0.2s ease;
   margin-top: 16px;
+}
+
+@media (max-width: 768px) {
+  .resources {
+    max-width: 90%;
+  }
+
+  .container {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
 }
 </style>

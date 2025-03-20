@@ -1,8 +1,6 @@
 <template>
     <div class="blog-page">
-      <h1>Impacts of UV</h1>
-      <p class="description">Data analysis and visualisation</p>
-  
+      <h1>Impacts of UV</h1>  
       <!-- <div class="blog-container">
         <div v-for="post in blogPosts" :key="post.id" class="blog-card">
           <img :src="post.image" alt="Blog Image" class="blog-image" />
@@ -90,71 +88,74 @@ import CancerIncident from '@/components/CancerIncident.vue';
 
   </script>
   
-  <style scoped>
-  .blog-page {
-    text-align: center;
-    padding: 20px;
-  }
-  
-  .description {
-    font-size: 16px;
-    margin-bottom: 20px;
-  }
-  
-  .blog-container {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
-    margin-top: 20px;
-  }
-  
-  .blog-card {
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    width: 300px;
-    overflow: hidden;
-    text-align: left;
-  }
-  
-  .blog-image {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-  }
-  
-  .blog-content {
-    padding: 15px;
-  }
-  
-  .blog-content h2 {
-    font-size: 18px;
-    margin-bottom: 10px;
-  }
-  
-  .blog-content p {
-    font-size: 14px;
-    color: #555;
-  }
-  
-  .read-more {
-    display: inline-block;
-    margin-top: 10px;
-    font-size: 14px;
-    font-weight: bold;
-    color: #007bff;
-    text-decoration: none;
-  }
-  
-  .read-more:hover {
-    text-decoration: underline;
-  }
-  .key-insights {
-  text-align: left;
+<style scoped>
+/* General Blog Page Styling */
+.blog-page {
+  text-align: center;
+  padding: 20px;
+}
+
+/* Insights Page Grid */
+.image-grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+/* Key Insights Section */
+.key-insights {
+  text-align: justify; /* Ensures all text is justified */
   margin: 40px auto;
   max-width: 900px;
   line-height: 1.8;
   color: #333;
 }
-  </style>  
+
+/* Adjusting Text Elements */
+.key-insights h1, 
+.key-insights h2 {
+  text-align: center; /* Keeps headings centered */
+}
+
+.key-insights p {
+  text-align: justify; /* Justifies all paragraph text */
+}
+
+/* Ensuring Images and Charts are Responsive */
+.chart-container {
+  width: 90%;
+  max-width: 1200px;
+  height: 60vh;
+  min-height: 400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .image-grid {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .chart-container {
+    height: 50vh;
+    min-height: 300px;
+  }
+
+  .key-insights {
+    padding: 10px;
+  }
+
+  .key-insights h1, .key-insights h2 {
+    font-size: 20px;
+  }
+
+  .key-insights p {
+    font-size: 14px;
+  }
+}
+</style>

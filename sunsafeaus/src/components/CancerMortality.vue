@@ -1,35 +1,44 @@
 <template>
-    <div class="cancer-mortality">
-      <!-- Filters -->
-      <div class="filters">
+  <div class="cancer-mortality">
+    <h1>Cancer Mortality Data</h1> <!-- Added Title -->
+
+    <!-- Filters -->
+    <div class="filters">
+      <div class="filter-item">
         <label for="cancerType">Cancer Type:</label>
         <select id="cancerType" v-model="selectedCancerType">
           <option v-for="type in cancerTypes" :key="type" :value="type">{{ type }}</option>
         </select>
-  
+      </div>
+
+      <div class="filter-item">
         <label for="sex">Sex:</label>
         <select id="sex" v-model="selectedSex">
           <option v-for="sex in sexes" :key="sex" :value="sex">{{ sex }}</option>
         </select>
-  
+      </div>
+
+      <div class="filter-item">
         <label for="startYear">Start Year:</label>
         <select id="startYear" v-model="selectedStartYear">
           <option v-for="year in years" :key="year" :value="year">{{ year }}</option>
         </select>
-  
+      </div>
+
+      <div class="filter-item">
         <label for="endYear">End Year:</label>
         <select id="endYear" v-model="selectedEndYear">
           <option v-for="year in years" :key="year" :value="year">{{ year }}</option>
         </select>
       </div>
-  
-  
-      <!-- Bar Chart -->
-      <div class="chart-container">
-        <canvas ref="barChart"></canvas>
-      </div>
     </div>
-  </template>
+
+    <!-- Bar Chart -->
+    <div class="chart-container">
+      <canvas ref="barChart"></canvas>
+    </div>
+  </div>
+</template>
   
   <script>
   import { ref, computed, watch, onMounted } from 'vue';
@@ -42,8 +51,8 @@
     setup() {
       const selectedCancerType = ref('Melanoma of the skin');
       const selectedSex = ref('Persons');
-      const selectedStartYear = ref(2000);
-      const selectedEndYear = ref(2020);
+      const selectedStartYear = ref(2011);
+      const selectedEndYear = ref(2023);
   
       const cancerData = ref([]);
   
@@ -88,37 +97,45 @@
       let chartInstance = null;
   
       const updateChart = () => {
-        if (chartInstance) {
-          chartInstance.destroy();
-        }
-  
-        const labels = years.value.filter(year => year >= selectedStartYear.value && year <= selectedEndYear.value);
-        const counts = labels.map(year => {
-          const rows = filteredData.value.filter(row => row.Year === year);
-          return rows.reduce((sum, row) => sum + row.Count, 0);
-        });
-  
-        chartInstance = new Chart(barChart.value, {
-          type: 'bar',
-          data: {
-            labels,
-            datasets: [{
-              label: 'Total Death Count',
-              data: counts,
-              backgroundColor: 'rgba(75, 192, 192, 0.2)',
-              borderColor: 'rgba(75, 192, 192, 1)',
-              borderWidth: 1,
-            }],
+  if (chartInstance) {
+    chartInstance.destroy();
+  }
+
+  const labels = years.value.filter(year => year >= selectedStartYear.value && year <= selectedEndYear.value);
+  const counts = labels.map(year => {
+    const rows = filteredData.value.filter(row => row.Year === year);
+    return rows.reduce((sum, row) => sum + row.Count, 0);
+  });
+
+  chartInstance = new Chart(barChart.value, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        label: 'Total Death Count', // Change accordingly for each chart
+        data: counts,
+        backgroundColor: 'rgba(75, 192, 192, 0.4)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1,
+      }],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false, // Allows chart to take up available space
+      scales: {
+        x: {
+          ticks: {
+            autoSkip: false, // Prevents labels from disappearing
           },
-          options: {
-            scales: {
-              y: {
-                beginAtZero: true,
-              },
-            },
-          },
-        });
-      };
+        },
+        y: {
+          beginAtZero: true,
+        },
+      },
+    },
+  });
+};
+
   
       watch([selectedCancerType, selectedSex, selectedStartYear, selectedEndYear], updateChart);
       watch(cancerData, updateChart);
@@ -138,37 +155,84 @@
   };
   </script>
   
-  <style scoped>
-  .cancer-mortality {
-    font-family: Arial, sans-serif;
-  }
-  
-  .filters {
-    margin-bottom: 20px;
-  }
-  
-  .filters label {
-    margin-right: 10px;
-  }
-  
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-  }
-  
-  th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-  }
-  
-  th {
-    background-color: #f4f4f4;
-  }
-  
+<style scoped>
+.cancer-mortality {
+  font-family: Arial, sans-serif;
+  padding: 10px;
+  text-align: center; /* Ensure title is centered */
+}
+
+/* Heading Styling */
+.cancer-mortality h1 {
+  font-size: 28px; /* Ensure same size as Cancer Incident Data */
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* Filters container */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px; /* Space between filters */
+  justify-content: center;
+  align-items: center; /* Ensures vertical alignment */
+  margin-bottom: 20px;
+}
+
+/* Individual filter item */
+.filter-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 180px; /* Ensures all dropdowns have the same width */
+  text-align: center;
+}
+
+/* Label styling */
+.filter-item label {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  white-space: nowrap; /* Prevents text wrapping */
+}
+
+/* Dropdown styling */
+.filter-item select {
+  padding: 8px;
+  font-size: 16px;
+  width: 200px; /* Ensures all dropdowns have the same width */
+  min-width: 200px;
+  max-width: 200px;
+  box-sizing: border-box; /* Prevents layout shifts */
+}
+
+/* Chart container */
+.chart-container {
+  width: 90%;
+  max-width: 1200px;
+  height: 60vh;
+  min-height: 400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Ensure even chart sizing on smaller screens */
+@media (max-width: 768px) {
   .chart-container {
-    width: 80%;
-    margin: 0 auto;
+    height: 50vh;
+    min-height: 300px;
   }
-  </style>
+
+  .filters {
+    flex-direction: column; /* Stack filters vertically on smaller screens */
+    align-items: center;
+  }
+
+  .filter-item select {
+    width: 100%;
+    max-width: 200px;
+  }
+}
+</style>

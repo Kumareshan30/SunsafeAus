@@ -2,16 +2,18 @@
   <nav class="navbar">
     <div class="nav-container">
       <div class="logo">
+        <router-link to="/" class="logo">
         <img src="@/assets/logo.png" alt="Sun Safe Logo" />
+        </router-link>
       </div>
-      <div class="hamburger" @click="toggleMenu">
+      <div class="hamburger" @click="toggleMenu" v-if="!isMenuActive">
         &#9776;
       </div>
       <ul class="nav-links" :class="{ 'nav-active': isMenuActive }">
-        <li><router-link to="/">Home</router-link></li>
-        <li><router-link to="/uv-tracker">UV Tracker</router-link></li>
-        <li><router-link to="/resources">Resources</router-link></li>
-        <li><router-link to="/blog">Cancer Awareness</router-link></li>
+        <li><router-link to="/" @click="closeMenu">Home</router-link></li>
+        <li><router-link to="/uv-tracker" @click="closeMenu">UV Tracker</router-link></li>
+        <li><router-link to="/resources" @click="closeMenu">Resources</router-link></li>
+        <li><router-link to="/blog" @click="closeMenu">Cancer Awareness</router-link></li>
       </ul>
     </div>
   </nav>
@@ -28,7 +30,16 @@ export default {
     toggleMenu() {
       this.isMenuActive = !this.isMenuActive;
     },
+    closeMenu() {
+      this.isMenuActive = false;
+    },
   },
+  watch: {
+    // Watch for route changes to close menu and reset hamburger icon
+    $route() {
+      this.isMenuActive = false;
+    }
+  }
 };
 </script>
 
@@ -57,7 +68,7 @@ export default {
 }
 
 .hamburger {
-  display: none;
+  display: none; /* Hide hamburger by default (desktop view) */
   font-size: 24px;
   cursor: pointer;
 }
@@ -88,6 +99,7 @@ export default {
   text-underline-offset: 4px;
 }
 
+/* Mobile Menu */
 @media (max-width: 768px) {
   .hamburger {
     display: block;

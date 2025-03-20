@@ -149,7 +149,6 @@ const statusText = computed(() => {
 
 <style scoped>
 .uv-gauge {
-  font-family: Arial, sans-serif;
   background: #f8f9fa;
   border-radius: 8px;
   padding: 20px;

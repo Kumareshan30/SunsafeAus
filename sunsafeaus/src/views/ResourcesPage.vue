@@ -62,7 +62,7 @@
 
           <!-- Recommendation Box -->
           <div class="result-box">
-            <h3>Your Recommendations-</h3>
+            <h3>Your Recommendations</h3>
             <ul class="recommendation-list">
               <li v-for="(value, key) in recommendation" :key="key" class="recommendation-item">
                 <span class="key">{{ key.replace(/_/g, ' ') }}:</span>

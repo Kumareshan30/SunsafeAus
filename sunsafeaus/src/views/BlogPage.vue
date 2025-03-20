@@ -1,6 +1,5 @@
 <template>
     <div class="blog-page">
-      <h1>Impacts of UV</h1>  
       <!-- <div class="blog-container">
         <div v-for="post in blogPosts" :key="post.id" class="blog-card">
           <img :src="post.image" alt="Blog Image" class="blog-image" />
@@ -24,8 +23,7 @@
 </div>
 
     <div class="key-insights">
-      <h1>Key Insights</h1>
-      <h2>Steady Increase in Cancer Incidence</h2>
+      <h2>Cancer Incidences</h2>
       <p>Steady Increase in Cancer Incidence
 
 Over the years, there has been a noticeable rise in reported cases of Melanoma of the skin and Non-melanoma skin cancer for both males and females.
@@ -47,7 +45,7 @@ Preventive Measures Needed
 The rise in cases highlights the importance of early screening, sun protection, and awareness campaigns to reduce long-term risks.
 </p>
 
-      <h2>CANCER- MORTALITY</h2>
+      <h2>Cancer Mortality</h2>
         <p>1.⁠ <u>⁠Mortality Trends Over Time:</u>
 Cancer-related deaths have steadily increased over the years for both Melanoma and Non-melanoma skin cancers.
 The increase in deaths is more noticeable from the 1990s onwards, aligning with the rising incidence of skin cancer.</p>

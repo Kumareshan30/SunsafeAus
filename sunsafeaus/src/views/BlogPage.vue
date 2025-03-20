@@ -17,8 +17,11 @@
   <div class="insights-page">
 
     <div class="image-grid">
-  <div v-for="(image, index) in images" :key="index" class="image-card">
-    <img :src="image.src" :alt="image.title" class="blog-image" />
+      <div>
+    <h1>Cancer Mortality Data</h1>
+    <CancerMortality/>
+    <h1>Cancer Incident Data</h1>
+    <CancerIncident/>
   </div>
 </div>
 
@@ -64,68 +67,27 @@ Early detection and awareness campaigns can help reduce mortality rates for skin
 Continued advancements in treatment have helped slow the rate of mortality increase, but further research is needed.
 Regular skin screenings, sun protection habits, and early medical intervention remain key in reducing deaths from both melanoma and non-melanoma skin cancers.</p>
 
-      <!-- 其他关键见解 -->
     </div>
   </div>
 </div>
   </template>
   
   <script>
-import blog1 from '@/assets/blog2.png'
-import blog2 from '@/assets/blog2.png'
-import blog3 from '@/assets/blog3.png'
-import blog4 from '@/assets/blog4.png'
-import blog5 from '@/assets/blog5.png'
-import blog6 from '@/assets/blog6.png'
-import blog7 from '@/assets/blog7.png'
-import blog8 from '@/assets/blog8.png'
 
-const images = [
-{ src: blog1, title: 'Understanding UV Radiation', description: 'Explore the impact of UV radiation on skin health.' },
-  { src: blog2, title: 'Understanding UV Radiation', description: 'Explore the impact of UV radiation on skin health.' },
-  { src: blog2, title: 'Stay Safe Under the Sun', description: 'Learn about sun protection measures.' },
-  { src: blog3, title: 'UV Index and Weather', description: 'Understand the science behind UV index.' },
-  { src: blog4, title: 'Cancer Incidence Trends', description: 'See the rise in skin cancer cases.' },
-  { src: blog5, title: 'Gender Differences', description: 'Explore differences in cancer rates by gender.' },
-  { src: blog6, title: 'Impact of Cancer Type', description: 'Understand the impact of melanoma vs non-melanoma.' },
-  { src: blog7, title: 'Recent Trends', description: 'See the sharp rise in cases since 2000.' },
-  { src: blog8, title: 'Preventive Measures', description: 'Learn about early screening and sun protection.' },
-]
+import CancerMortality from '@/components/CancerMortality.vue';
+import CancerIncident from '@/components/CancerIncident.vue';
+
+
 
   export default {
     name: "BlogPage",
-    data() {
-      return {
-      images, // ✅ 正确暴露 images 变量
+    components: {
+    CancerMortality,
+    CancerIncident
+    },
     };
       
-  
-    // setup() {
-      // Simulated blog post data
-    //   const blogPosts = ref([
-    //     {
-    //       id: 1,
-    //       title: "Understanding UV Radiation and Its Effects",
-    //       excerpt: "Explore the impact of UV radiation on skin health and why sun protection is crucial.",
-    //       image: "/assets/blog1.jpg",
-    //     },
-    //     {
-    //       id: 2,
-    //       title: "How to Stay Safe Under the Australian Sun",
-    //       excerpt: "Learn about the best sunscreen practices and protective measures for sun safety.",
-    //       image: "/assets/blog2.jpg",
-    //     },
-    //     {
-    //       id: 3,
-    //       title: "The Science Behind UV Index and Weather",
-    //       excerpt: "A detailed explanation of the UV index, how it's measured, and what it means for daily life.",
-    //       image: "/assets/blog3.jpg",
-    //     },
-    //   ]);
-  
-    //   return { blogPosts };
-    },
-  };
+
   </script>
   
   <style scoped>

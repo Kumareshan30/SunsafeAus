@@ -68,7 +68,8 @@
             <ul class="recommendation-list">
               <li v-for="(value, key) in recommendation" :key="key" class="recommendation-item">
                 <span class="key">{{ key.replace(/_/g, ' ') }}:</span>
-                <span class="value">{{ value }}</span>
+                <span class="value" v-if="key === 'reapply_frequency'">{{ formatReapplyFrequency(value) }}</span>
+                <span class="value" v-else>{{ value }}</span>
               </li>
             </ul>
           </div>
@@ -82,18 +83,27 @@
 
       <!-- Right Section (Reminders) -->
       <div class="right-section">
-        <h3>Reminders 🔔</h3>
-        <div class="reminder-instructions">
-          <p>Don't forget to reapply Sunscreen!</p>
-        </div>
-        <ul class="reminder-list">
-          <li v-for="(time, index) in reminders" :key="index" class="reminder-item">
-            <span class="time">{{ time.format('HH:mm') }}</span>
-            <span class="countdown">{{ timeUntil(time) }}</span>
-          </li>
-        </ul>
-      </div>
+      <h3>Reminders：</h3>
+      <div class="reminder-instructions">
+    <p>Don't forget to reapply Sun Scream</p>
     </div>
+      <ul class="reminder-list">
+        <li v-for="(time, index) in reminders" :key="index" class="reminder-item">
+          <span class="time">{{ time.format('HH:mm') }}</span>
+          <span class="countdown">{{ timeUntil(time) }}</span>
+        </li>
+      </ul>
+      <button v-if="reminders.length > 0" @click="downloadICSFile" class="download-button">
+    Download Reminders (.ics)
+  </button>
+    </div>
+  </div>
+  <div v-if="showPopup" class="popup-overlay">
+    <div class="popup-content">
+      <p>It's time to reapply sunscreen!</p>
+      <button @click="closePopup">Close</button>
+    </div>
+  </div>
   </div>
 </template>
 
@@ -106,6 +116,13 @@ import { onMounted } from 'vue';
 import { watch } from 'vue';
 
 
+const debounce = (fn, delay = 500) => {
+  let timeoutId;
+  return (...args) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => fn(...args), delay);
+  };
+};
 
 const form = ref({
   skin_type: '',
@@ -149,22 +166,23 @@ const reminders = ref([])
 
 
 const now = ref(dayjs())
+const showPopup = ref(false)
 
 
-const searchLocations = async () => {
+const searchLocations = debounce(async () => {
   if (locationQuery.value) {
     try {
       const response = await axios.get('https://aussafebackend.onrender.com/locations', {
         params: { search_param: locationQuery.value }
-      })
-      locationOptions.value = response.data
+      });
+      locationOptions.value = response.data;
     } catch (err) {
-      console.error('fail to find location:', err)
+      console.error('fail to find location:', err);
     }
   } else {
-    locationOptions.value = []
+    locationOptions.value = [];
   }
-}
+}, 300);
 
 const selectLocation = (item) => {
   form.value.location = item
@@ -214,7 +232,7 @@ let timer = null
 onMounted(() => {
   timer = setInterval(() => {
     now.value = dayjs()
-  }, 60 * 1000) 
+  }, 10 * 1000) 
 })
 
 onUnmounted(() => {
@@ -255,6 +273,82 @@ const timeUntil = (reminderTime) => {
   const hours = Math.floor(diff / 60)
   const minutes = diff % 60
   return `in ${hours} hour${hours > 1 ? 's' : ''} ${minutes} minutes`
+}
+
+const checkReminders = () => {
+  const currentTime = dayjs()
+  const activeReminder = reminders.value.find(reminder => {
+    return reminder.diff(currentTime, 'minute') <= 0
+  })
+
+  if (activeReminder) {
+    showPopup.value = true
+  }
+}
+
+const closePopup = () => {
+  showPopup.value = false
+}
+
+watch(reminders, () => {
+  checkReminders()
+})
+
+onMounted(() => {
+  timer = setInterval(() => {
+    now.value = dayjs()
+    checkReminders() 
+  }, 10 * 1000)
+})
+
+const formatReapplyFrequency = (frequency) => {
+  if (frequency === 1) {
+    return 'Every hour'
+  } else {
+    return `Every ${frequency} hours`
+  }
+}
+
+const generateICSFile = () => {
+  const events = reminders.value.map((reminder, index) => {
+    const startTime = reminder.format('YYYYMMDDTHHmmss')
+    const endTime = reminder.add(15, 'minute').format('YYYYMMDDTHHmmss') 
+    return `
+BEGIN:VEVENT
+UID:${index}@aussafe
+DTSTAMP:${dayjs().format('YYYYMMDDTHHmmss')}
+DTSTART:${startTime}
+DTEND:${endTime}
+SUMMARY:Reapply Sunscreen
+DESCRIPTION:It's time to reapply sunscreen!
+END:VEVENT
+    `.trim()
+  }).join('\n')
+
+  const icsContent = `
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Aussafe//Sunscreen Reminder//EN
+${events}
+END:VCALENDAR
+  `.trim()
+
+  return icsContent
+}
+
+const downloadICSFile = () => {
+  const icsContent = generateICSFile()
+  const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' })
+  const url = URL.createObjectURL(blob)
+
+  const link = document.createElement('a')
+  link.href = url
+  link.setAttribute('download', 'sunscreen_reminders.ics')
+  document.body.appendChild(link)
+  link.click()
+
+  document.body.removeChild(link)
+  URL.revokeObjectURL(url)
 }
 
 </script>
@@ -438,5 +532,89 @@ h1 {
 
 .reminder-item:last-child {
   border-bottom: none;
+}
+.reminder-item:hover {
+  background-color: #f7fafc;
+}
+
+.reminder-time {
+  font-weight: 600;
+  color: #4a5568;
+  font-size: 16px;
+}
+
+.reminder-countdown {
+  color: #718096;
+  font-size: 14px;
+}
+
+.no-reminders {
+  text-align: center;
+  color: #718096;
+  padding: 40px 20px;
+  font-size: 14px;
+}
+
+.reminder-instructions p {
+  margin: 0;
+  line-height: 1.5;
+  font-size: 12px;
+
+}
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-content {
+  background-color: #ffffff;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.popup-content p {
+  margin-bottom: 16px;
+  font-size: 16px;
+  color: #2d3748;
+}
+
+.popup-content button {
+  padding: 8px 16px;
+  background-color: #fff4bc;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #2d3748;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.popup-content button:hover {
+  background-color: #ffefb3;
+}
+.download-button {
+  width: 100%;
+  padding: 12px;
+  background-color:#ffefb3;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #2d3748;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-top: 16px;
 }
 </style>

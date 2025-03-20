@@ -179,7 +179,6 @@ export default {
 </script>
 
 <style scoped>
-/* Container */
 .uv-tracker {
   text-align: center;
   padding: 20px;
@@ -188,14 +187,13 @@ export default {
   margin: 0 auto;
 }
 
-/* Search Bar */
 .search-section {
   margin: 20px 0;
 }
 
 .search-input {
   padding: 12px 15px;
-  width: 100%;  /* Make it responsive */
+  width: 100%;
   max-width: 400px;
   border: 2px solid #ddd;
   border-radius: 6px;
@@ -214,14 +212,12 @@ export default {
   margin-top: 5px;
 }
 
-/* Error Message */
 .error {
   color: #e74c3c;
   margin: 10px 0;
   font-size: 14px;
 }
 
-/* Dropdown Results */
 .results {
   margin: 15px 0;
 }
@@ -233,7 +229,6 @@ export default {
   border-radius: 4px;
 }
 
-/* UV Gauge Section */
 .uv-gauge {
   background: transparent;
   border-radius: 10px;
@@ -264,41 +259,46 @@ export default {
 /* Info Section */
 .info-container {
   display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap; 
-  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
   margin-top: 20px;
+  flex-wrap: nowrap; /* Ensures it remains in a row */
+  max-width: 100%;
+  overflow-x: auto; /* Prevents breaking */
 }
 
 /* Individual Info Box */
 .info-box {
-  padding: 15px;
-  width: 120px; /* Adjust for mobile */
+  padding: 10px;
+  width: 90px; /* Reduced size for better fit */
   background: #ffffff;
-  border-radius: 10px;
+  border-radius: 8px;
   text-align: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  flex: 1; /* Allows them to share equal width */
 }
 
 .info-icon {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
 }
 
 .info-label {
   font-weight: 600;
-  margin: 8px 0;
+  margin: 6px 0;
+  font-size: 12px;
 }
 
 .info-value {
-  font-size: 0.9em;
+  font-size: 12px;
   color: #666;
 }
 
 /* Mobile Responsiveness */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 600px) {
   .search-input {
-    width: 90%;
+    width: 95%;
   }
 
   .uv-gauge {
@@ -306,13 +306,24 @@ export default {
   }
 
   .info-container {
-    flex-direction: column;
-    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap; /* Keep in row */
+    overflow-x: auto; /* Allow scrolling if needed */
   }
 
   .info-box {
-    width: 80%;
-    margin-bottom: 10px;
+    width: 80px; /* Reduce even further */
+    padding: 8px;
+  }
+
+  .info-icon {
+    width: 35px;
+    height: 35px;
+  }
+
+  .info-label,
+  .info-value {
+    font-size: 10px;
   }
 }
 </style>

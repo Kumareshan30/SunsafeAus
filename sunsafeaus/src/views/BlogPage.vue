@@ -48,19 +48,19 @@ The rise in cases highlights the importance of early screening, sun protection, 
 </p>
 
       <h2>CANCER- MORTALITY</h2>
-        <p>1.⁠ ⁠Mortality Trends Over Time
+        <p>1.⁠ <u>⁠Mortality Trends Over Time:</u>
 Cancer-related deaths have steadily increased over the years for both Melanoma and Non-melanoma skin cancers.
 The increase in deaths is more noticeable from the 1990s onwards, aligning with the rising incidence of skin cancer.</p>
-<p>2.⁠ ⁠Gender-Based Mortality Differences
+<p>2.⁠ <u>⁠Gender-Based Mortality Differences:</u>
 Males have a higher mortality rate compared to females for Melanoma of the skin, likely due to later-stage diagnosis and fewer protective measures.
 Females show a gradual rise in mortality, but at a lower rate than males.</p>
-<p>3.⁠ ⁠Peak Mortality Periods
+<p>3.⁠ <u>⁠Peak Mortality Periods:</u>
 The 2010-2020 period shows the highest number of cancer-related deaths, with some decline in recent years.
 The mortality rate does not increase at the same pace as incidence rates, suggesting better treatment options may have improved survival.</p>
-<p>4.⁠ ⁠Non-Melanoma Skin Cancer Mortality
+<p>4.⁠ <u>⁠Non-Melanoma Skin Cancer Mortality:</u>
 Compared to Melanoma, non-melanoma skin cancer mortality rates are significantly lower, but they have been rising steadily.
 Men experience a higher fatality rate from non-melanoma skin cancers than women.</p>
-<p>5.⁠ ⁠Implications & Preventive Measures
+<p>5.⁠ <u>⁠Implications & Preventive Measures:</u>
 Early detection and awareness campaigns can help reduce mortality rates for skin cancers.
 Continued advancements in treatment have helped slow the rate of mortality increase, but further research is needed.
 Regular skin screenings, sun protection habits, and early medical intervention remain key in reducing deaths from both melanoma and non-melanoma skin cancers.</p>

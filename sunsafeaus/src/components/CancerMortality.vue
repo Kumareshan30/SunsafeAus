@@ -157,7 +157,6 @@
   
 <style scoped>
 .cancer-mortality {
-  font-family: Arial, sans-serif;
   padding: 10px;
   text-align: center; /* Ensure title is centered */
 }

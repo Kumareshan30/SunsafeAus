@@ -51,20 +51,19 @@ export default {
   height: auto;
   object-fit: cover;
   display: block;
+  margin-bottom: 20px;
 }
 
-/* Overlay (DESKTOP VIEW - Old Design) */
 .overlay {
   position: absolute;
-  top: 65%;
-  left: 5%;
+  top: 60%;
+  left: 2%;
   transform: translateY(-50%);
   color: black;
   text-align: left;
-  max-width: 380px;
+  max-width: 350px;
 }
 
-/* Heading */
 .overlay h2 {
   font-size: 2rem;
   font-weight: bold;
@@ -72,70 +71,98 @@ export default {
   margin-bottom: 15px;
 }
 
-/* Highlighted Text */
-.highlight {
-  color: #ff9800; /* Makes "SunSafeAus" stand out */
+.highlight{
+  border-radius: 1em 0 1em 0;
+  background-image: linear-gradient(
+    -75deg,
+    rgba(255, 224, 0, 0.2),
+    rgba(255, 224, 0, 0.7) 95%,
+    rgba(255, 224, 0, 0.1)
+  );
 }
 
-/* Paragraph */
 .overlay p {
   font-size: 1rem;
-  margin-bottom: 20px; /* Added spacing */
+  margin-bottom: 20px;
 }
 
-/* Button */
 .read-more {
   background-color: #fff4bc;
   padding: 12px 18px;
   border: none;
   font-size: 1rem;
-  font-weight: bold;
+  font-weight: normal;
   cursor: pointer;
   border-radius: 8px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease-in-out;
-  margin-top: 20px; /* Extra space from text */
+  margin-top: 5px;
 }
 
 .read-more:hover {
   background-color: #f6e8b3;
 }
 
-/* ✅ Mobile View Adjustments */
 @media screen and (max-width: 768px) {
   .image-container {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .background-image {
-    width: 100%;
-    margin-bottom: 20px; /* Added space between image and text */
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: start;
   }
 
   .overlay {
     position: relative;
-    top: auto;
-    left: auto;
-    transform: none;
+    top: 15%;
+    left: 0;
+    transform: translateY(-20%);
     max-width: 90%;
-    padding: 15px;
-    text-align: center;
+    text-align: left;
   }
 
+  .highlight {
+    background-image: linear-gradient(
+      -100deg,
+      rgba(255, 224, 0, 0.1),
+      rgba(255, 224, 0, 0.5) 80%,
+      rgba(255, 224, 0, 0.05)
+    );
+  }
+
+  .highlight {
+    background-image: linear-gradient(
+      -100deg,
+      rgba(255, 224, 0, 0.1),
+      rgba(255, 224, 0, 0.5) 80%,
+      rgba(255, 224, 0, 0.05)
+    );
+  }
   .overlay h2 {
     font-size: 1.8rem;
+    margin-left: -30px;
   }
 
   .overlay p {
     font-size: 0.9rem;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
+    max-width: 70%;
+    margin-left: -30px;
   }
 
   .read-more {
     font-size: 0.9rem;
-    padding: 10px 16px;
-    margin-top: 20px; /* More spacing */
+    margin-top: 5px;
+    margin-left: -35px;
   }
+
+  .background-image {
+  width: 100vw;
+  height: 125%;
+  object-fit: cover;
+  position: absolute;
+  top: -26%;
+  left: -10%;
+  z-index: -1;
+}
 }
 </style>
+

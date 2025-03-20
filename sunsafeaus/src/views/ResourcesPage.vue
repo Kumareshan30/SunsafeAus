@@ -116,6 +116,13 @@ import { onMounted } from 'vue';
 import { watch } from 'vue';
 
 
+const debounce = (fn, delay = 500) => {
+  let timeoutId;
+  return (...args) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => fn(...args), delay);
+  };
+};
 
 const form = ref({
   skin_type: '',
@@ -162,20 +169,20 @@ const now = ref(dayjs())
 const showPopup = ref(false)
 
 
-const searchLocations = async () => {
+const searchLocations = debounce(async () => {
   if (locationQuery.value) {
     try {
       const response = await axios.get('https://aussafebackend.onrender.com/locations', {
         params: { search_param: locationQuery.value }
-      })
-      locationOptions.value = response.data
+      });
+      locationOptions.value = response.data;
     } catch (err) {
-      console.error('fail to find location:', err)
+      console.error('fail to find location:', err);
     }
   } else {
-    locationOptions.value = []
+    locationOptions.value = [];
   }
-}
+}, 300);
 
 const selectLocation = (item) => {
   form.value.location = item
